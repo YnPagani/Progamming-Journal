@@ -1,5 +1,17 @@
 import db
 
+db.create_table()
+
+menu = """
+Please select one of the following options:
+1) Add new entry for today.
+2) View entries.
+3) Exit.
+
+Your selection: """
+
+print("Welcome to the Programming Journal!")
+
 
 def prompt_new_entry():
     # Asking user for data
@@ -11,20 +23,17 @@ def prompt_new_entry():
 
 
 def view_entries(entries: list):
-    # Retrieving data from db and displaying it
+    # Indexes
+    CONTENT = 0
+    DATE = 1
+
+    # When iterating over a cursor, the cursor will fetch the row that it's
+    # pointing to, and then will move to point to the next row.
+    # By default when fetching from the cursor, it will return a tuple for each
+    # row.
     for entry in entries:
-        print(f"{entry['content']}\n{entry['date']}\n\n")
+        print(f"{entry[DATE]}\n{entry[CONTENT]}\n\n")
 
-
-menu = """
-Please select one of the following options:
-1) Add new entry for today.
-2) View entries.
-3) Exit.
-
-Your selection: """
-
-print("Welcome to the Programming Journal!")
 
 while (user_input := input(menu)) != "3":
     if user_input == "1":
