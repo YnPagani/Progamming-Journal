@@ -1,4 +1,5 @@
 import db
+import sqlite3
 
 db.create_table()
 
@@ -6,7 +7,8 @@ menu = """
 Please select one of the following options:
 1) Add new entry for today.
 2) View entries.
-3) Exit.
+3) Dump all entries.
+4) Exit.
 
 Your selection: """
 
@@ -22,7 +24,7 @@ def prompt_new_entry():
     db.add_entry(entry_content, entry_date)
 
 
-def view_entries(entries: list):
+def view_entries(entries: sqlite3.Cursor):
     # Indexes
     CONTENT = 0
     DATE = 1
@@ -35,12 +37,15 @@ def view_entries(entries: list):
         print(f"{entry[DATE]}\n{entry[CONTENT]}\n\n")
 
 
-while (user_input := input(menu)) != "3":
+while (user_input := input(menu)) != "4":
     if user_input == "1":
         prompt_new_entry()
 
     elif user_input == "2":
         view_entries(db.get_entries())
+
+    elif user_input == "3":
+        db.reset_table()
 
     else:
         print("Invalid input, try again")

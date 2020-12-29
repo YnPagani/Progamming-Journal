@@ -21,3 +21,8 @@ def add_entry(entry_content: str, entry_date: str):
 def get_entries() -> sqlite3.Cursor:
     cursor = connection.execute("SELECT * FROM entries;")
     return cursor
+
+
+def reset_table():
+    with connection:
+        connection.execute("DELETE FROM entries;")
